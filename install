@@ -1,0 +1,41 @@
+# basic description
+
+scripts running on a regulary basis as cron job to check for new Posts and then re-posting them in Diaspora*
+This skript only is interim solution until Diaspora will have true group functionality.
+
+# actual Status
+
+not deployed - not suitable to use - warning
+
+# requirements
+
+ability to do *sql*querys in the Database, to use *curl* , *cron* and run basic *shell*-scripts. if you run your own Pod, chances are good that these is all true. This only have to be true for the Pod/Server where the Group is running on, all contributing users do not need a specialised software or pod.
+If you think you can do it, you can try to run a pod for the purpose of having group users
+
+# backup warning
+
+please, if your Pod differ in any Way (like no Mysql, no Debian 7, no whatever), or your just testing *make a Backup beforehand.*
+
+# preperation
+
+-  download scriptfile, i would suggest to use 	git clone https://github.com/viisauksena/diasp_group.git  	in /home/diaspora.
+-  open a fresh new acount on your desired Pod (see requirements). This user will work as the group. Create the user, login, and *disable first steps* in settings and *enable autoconnect* if you are connected. You don't have to use the autoconnect if you want to have basic control of your Member in the Group. Everybody which you are sharing with will get the posts of the others re-posted.
+-  We need a valid cookie_session and a valid csrf token (yeah, its somehow like basic bad hacking works) of the new user.
+[Todo - maybe we can automate this ...] 
+[Todo - get the author id of new user - some strange number]
+-  copy config.example to config 	cp config.example config and adjust the settings with any texteditor you like
+
+# before cron jobbing
+-  connect with your normal account with new group-user, we suggest to use an extra group-aspect for that, or at least be aware of the consequences of where you put your group account into. Every post you share with an aspect which belongs to the group-user, the groupuser will multiply it to all groupmembers. We just mention this, because some people didnt get the functionality of aspects yet. If the groupuser do autoconnect he already has you reconnected, otherwise you have to do this manualy now
+-  basic testing: make a post non-public to this new group-aspect with your normal account
+-  because we dont have any cronjob yet nothing more will happen, we now try if the script works manually, go to the script folder and run repost.sh and than check diaspora website if the post is re-posted, you probably will get no output at the shell at all. If you get some errors - ohOh - you have to go through them, basicly it means something gone wrong.
+-  if everything works fine you use crontab -e and for running this script every minute  
+use a line like this, for any other repeating - watch for *crontab faq*  
+* * * * * /home/diaspora/diasp_group/getall.sh
+
+# your done
+the script should check regulary for new posts and repost them,  
+deleted posts will be found nearby as regular (so that takes mabe some minutes),
+you will see your own post double - you can do nothing about that.
+
+have fun - enjoy 
