@@ -33,7 +33,16 @@ testing *make a Backup beforehand.*
    Everybody which you are sharing with will get the posts of the other Members re-posted.
 -  We need a valid cookie_session and a valid csrf token 
    (yeah, its somehow like basic bad hacking works) of the new user.
-[Todo - maybe we can automate this ...] 
+   The CSRF Token can be found while you are logged in as this new user in the source of your loaded Page,
+   around line 50 or so, search for 
+   <meta content="authenticity_token" name="csrf-param">
+   <meta content="uoahsomesuperWe3rdT0kenchunkcCNcnhk=" name="csrf-token">
+   The Session key is saved in a Cookie, we need the _diaspora_session for this, you have to save this also.
+   Somehow good to write it directly in config file or collect it in a extra-textfile.
+-  delete the session Cookie without logging out ! 
+   (in my case this lets the cookie be valid, as long as it is not automated this buggy behaviour is
+    very usefull for us)
+[Todo - maybe we can automate this like the _session_key alreay done] 
 [Todo - get the author id of new user - some strange number]
 -  copy config.example to config 	
    cp config.example config 
